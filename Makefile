@@ -19,4 +19,4 @@ fap.o : fap.c fap.h
 	$(CC) $(CFLAGS) -c fap.c
 
 clean:
-	rm 1-4 3-6 *.o
+	rm -rf 1-4 3-6 *.o
