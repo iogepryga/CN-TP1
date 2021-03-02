@@ -1,1 +1,48 @@
-1 : H(X) = - Somme(p*log(p)) = 0,39×log( 0,39)+0,20×log(0,20)+0,14×log(0,14)+0,11×log(0,11)+0,09×log(0,09)+0,07×log(0,07) = 
+1-1 : H(X) = - Somme(p*log(p)) = −0,39×log₂( 0,39)−0,20×log₂(0,20)−0,14×log₂(0,14)−0,11×log₂(0,11)−0,09×log₂(0,09)−0,07×log₂(0,07)  = 2,322788444
+
+1-2 : 3 car 2³ = 8 > 6
+
+1-3 : on remarque e1 apparait plus souvent que tout les autres, il serait donc judicieux de lui attribué un code court
+
+1-4 : voir 1-4.c
+
+1-5 : Oui : 2.322789
+
+1-6 : 2.536352
+
+2-1 : 5 , 4, 3 , 2, 1, 0 : 6 evènement équiprobable p(0.1667) -> entropie = 2.585191 -> 3bits
+
+2-2 : 0 -> 000 , 1 -> 001 , 2 -> 010 , 3 -> 011 , 4 -> 100 , 5 -> 101
+c'est un codage à longeur fixe , ici 3. donc le décodage est tres simple : on lit 3 bits , on decode, on relit 3bits etc ... et ça 5 fois car il y a que 5 enfant.
+Ex : 000001000011100 > 0 1 0 3 4 
+
+2-3 : Dans ce cas, on pourrait coder de cette maniere :
+nbfruit ecart1 ecart2 ecart3 ecart4 ecart5
+nb fruit serait coder avec le meme codage fix que la quesiotn 2-2
+pour l'ecart, on utiliserai un codage à longueur fixe.
+nb event : 2 (0, 1 d'ecart) , event equiprobable p(0.5) -> entropie = 1.00 -> 1bits
+0 -> 0 ( = meme nb fruit) et 1 -> 1 (= a mangé un fruit de plus) => ça implique nbfruit est l'inf
+ex : enfant 1 : 3 fruits, enfant 2 : 4, enfant 3 : 3, enfant 4 : 4, enfant 5 : 4.
+01101011 -> 011 01011 > 3 4 3 4 4
+
+2-4 : entropie = 1.438759 -> 2bits
+00 -> 3 , 01 -> 4 , 10 -> 5
+ex : 0001100100 -> 3 4 5 4 3
+
+3-1 : voir 3-1.png
+
+3-2 :
+e1 : 1
+e2 : 001
+e3 : 011
+e4 : 010
+e5 : 0001
+e6 : 0000
+
+3-3 : (0,39+3*(0,20+0,14+0,11)+4*(0,09+0,07)) = 2,38
+
+3-4 : Presque ! 2,38 contre 2,32
+
+3-5 : 2,38/3 = 0,79
+
+3-6 : 
