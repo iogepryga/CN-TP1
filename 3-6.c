@@ -7,34 +7,11 @@
 
 typedef struct {
     int lg;
+    float p;
     int code[256];
 } code_char;
 
 code_char HuffmanCode[256];
-
-/*float entropie_r(Arbre a) {
-    if(EstVide(a)) {return 0;}
-    float tmp = Etiq(a).p * log2(Etiq(a).p);
-    return tmp + entropie_r(FilsGauche(a)) + entropie_r(FilsDroit(a));
-}
-
-float entropie(Arbre a) {
-    if(EstVide(a)) {return -1;}
-    return (-1)*entropie_r(a);
-}*/
-
-void afficher_arbre (Arbre a, int niveau) {
-  if (a != NULL)
-  {
-    afficher_arbre (a->fd,niveau+1) ;
-    for (int i = 0; i < niveau; i++) {
-      printf ("\t") ;
-    }
-    printf (" %d (%d)\n\n", a->etiq, niveau) ;
-    afficher_arbre (a->fg, niveau+1) ;
-  }
-  return ;
-}
 
 Arbre ConstruireArbre(fap f) {
     while(!est_fap_vide(f)) {
@@ -44,45 +21,38 @@ Arbre ConstruireArbre(fap f) {
         if(est_fap_vide(f))
             return b;
         f = extraire(f,&c,&cc);
-        printf("----------------------\n");
-        afficher_arbre(b, 0);
-        printf("--\n");
-        afficher_arbre(c, 0);
-        printf("-----\n");
-        Arbre a = NouveauNoeud(b,(Element)-1,c);
+        printf("<---------------------------->\nOn prend : \n");
+        AfficherArbre(b);
+        printf("-- et :\n");
+        AfficherArbre(c);
+        printf("----- et on obtient :\n");
+        Arbre a = NouveauNoeud(b,-1,c);
+        AfficherArbre(a);
+        printf("<---------------------------->\n");
         if(est_fap_vide(f))
             return a;
         f = inserer(f,a,bb+cc);
-        afficher_arbre(a, 0);
     }
     return ArbreVide();
 }
 
-int Traiter(Arbre a, code_char c) {
-    if(Etiq(a)!= -1) {
-        HuffmanCode[Etiq(a)].lg = c.lg;
-        for(int i = 0 ; i < c.lg; i++ ){
-            HuffmanCode[Etiq(a)].code[i] = c.code[i];
-        }
-        return 1;
-    }
-    return 0;
-}
-
-
 void Parcourir_profondeur(Arbre a, code_char c) {
     if(a != NULL) {
-        if(!Traiter(a,c)) {
-            c.code[c.lg++] = 0;
-            Parcourir_profondeur(FilsGauche(a),c);
-            c.code[c.lg-1] = 1;
+        if(Etiq(a) == -1) {
+            c.code[c.lg] = 0; c.lg++;
+            Parcourir_profondeur(FilsGauche(a),c); c.lg--;
+            c.code[c.lg] = 1; c.lg++;
             Parcourir_profondeur(FilsDroit(a),c);
+        } else {
+            HuffmanCode[Etiq(a)].lg = c.lg;
+            for(int i = 0 ; i < c.lg; i++ )
+                HuffmanCode[Etiq(a)].code[i] = c.code[i];
         }
     }
 }
 
 void Construire_Code(Arbre huff) {
-    code_char a; a.lg = -1;
+    code_char a; a.lg = 0;
     Parcourir_profondeur(huff,a);
 }
 
@@ -97,49 +67,45 @@ int main (int argc, char**argv) {
     file = fopen (argv[1], "r") ;
     for (i = 0; fscanf (file, "%f", &ftmp1) != EOF; i++) {
         entropie += ftmp1 * log2(ftmp1);
-        atmp1 = NouveauNoeud(NULL,(Element)i,NULL);
+        atmp1 = NouveauNoeud(NULL,i,NULL);
         f = inserer(f,atmp1,ftmp1);
+        HuffmanCode[i].p = ftmp1;
     }
     entropie = -1 * entropie;
 
 
 
-    fap ftmp = creer_fap_vide();
+    fap faptmp = creer_fap_vide();
     while(!est_fap_vide(f)) {
         f = extraire(f,&atmp1,&ftmp1);
-        afficher_arbre(atmp1, 0);
-        printf("ftmp1 = %f\n\n\n",ftmp1);
-        ftmp = inserer(ftmp,atmp1,ftmp1);
+        printf("Feuille d'evenement %d avec la probalibité %f :\n",atmp1->etiq,ftmp1);
+        AfficherArbre(atmp1);
+        faptmp = inserer(faptmp,atmp1,ftmp1);
     }
-
-    while(!est_fap_vide(ftmp)) {
-        ftmp = extraire(ftmp,&atmp1,&ftmp1);
+    /*while(!est_fap_vide(faptmp)) {
+        faptmp = extraire(faptmp,&atmp1,&ftmp1);
         f = inserer(f,atmp1,ftmp1);
-    }
+    }*/
 
 
-
-
-
-
-
-
-    Arbre arbre = ConstruireArbre(f);
-    afficher_arbre(arbre,0);
+    Arbre arbre = ConstruireArbre(faptmp);
+    printf("||||||||||||||||||||||||||||||||||||||||\n            Arbre final :\n");
+    AfficherArbre(arbre);
+    printf("||||||||||||||||||||||||||||||||||||||||\n            Codage final :\n");
     Construire_Code(arbre);
-    printf("Event\tCode\n");
+    printf("Event\tCode\tLongueur\n");
     for(int j = 0; j < i ; j++) {
         printf("%d\t",j);
         for(int k = 0; k < HuffmanCode[j].lg; k++){
             printf("%d",HuffmanCode[j].code[k]);
         }
-        printf("\n");
+        printf("\t%d\n", HuffmanCode[j].lg);
+        moyenne += HuffmanCode[j].lg*HuffmanCode[j].p;
     }
-    //printf("Entropie : %f\n",entropie(arbre));
     printf("Entropie : %f\n",entropie);
-
-
-    
-
+    printf("Longueur moyenne : %f\n",moyenne);
+    detruire_fap(faptmp);
+    detruire_fap(f);
+    //LibererArbre(arbre);
     fclose (file) ;
 }

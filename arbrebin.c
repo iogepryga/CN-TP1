@@ -21,7 +21,7 @@ Arbre ArbreVide() { return NULL; }
  * par c, de fils gauche g et de fils droit d                         *
  * effet de bord : une nouvelle cellule est allouee                   *
  **********************************************************************/
-Arbre NouveauNoeud(Arbre g, Element c, Arbre d) {
+Arbre NouveauNoeud(Arbre g, int c, Arbre d) {
     Arbre a = (Arbre)malloc(sizeof(struct cellule));
 
     a->etiq = c;
@@ -44,11 +44,11 @@ int EstVide(Arbre a) { return (a == NULL); }
  * Etiq                                   *
  * parametres : un Arbre a                *
  * precondition : a non vide              *
- * resultat : un caractere                *
+ * resultat : un int                      *
  * description : renvoie l'etiquette de a *
  * effet de bord : aucun                  *
  ******************************************/
-Element Etiq(Arbre a) { return a->etiq; }
+int Etiq(Arbre a) { return a->etiq; }
 
 /*********************************************
  * FilsGauche                                *
@@ -92,17 +92,16 @@ void LibererArbre(Arbre a) {
  * description : affiche l'arbre a sur la sortie standard            *
  * effet de bord : un arbre est affiche                              *
  *********************************************************************/
-void AfficherArbreRec(Arbre a, int indent) {
-    int i;
-
-    if (!EstVide(a)) {
-        for (i = 0; i < indent; i++) {
-            printf(" ");
-        }
-        printf("%d\n", Etiq(a));
-        AfficherArbreRec(FilsGauche(a), indent + 2);
-        AfficherArbreRec(FilsDroit(a), indent + 2);
+void afficher_arbre_r(Arbre a, int niveau) {
+  if (a != NULL) {
+    afficher_arbre_r(a->fd,niveau+1) ;
+    for (int i = 0; i < niveau; i++) {
+      printf("\t") ;
     }
+    printf(" %d (%d)\n\n", Etiq(a), niveau) ;
+    afficher_arbre_r(a->fg, niveau+1) ;
+  }
+  return ;
 }
 
-void AfficherArbre(Arbre a) { AfficherArbreRec(a, 0); }
+void AfficherArbre(Arbre a) { afficher_arbre_r(a, 0); }

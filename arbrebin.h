@@ -3,10 +3,8 @@
 
 #include <stdio.h>
 
-typedef int Element;
-
 struct cellule {
-    Element etiq;
+    int etiq;
     struct cellule *fd;
     struct cellule *fg;
 };
@@ -30,7 +28,7 @@ Arbre ArbreVide();
  * par c, de fils gauche g et de fils droit d                         *
  * effet de bord : une nouvelle cellule est allouee                   *
  **********************************************************************/
-Arbre NouveauNoeud(Arbre g, Element c, Arbre d);
+Arbre NouveauNoeud(Arbre g, int c, Arbre d);
 
 /********************************************
  * EstVide                                  *
@@ -45,11 +43,11 @@ int EstVide(Arbre a);
  * Etiq                                   *
  * parametres : un Arbre a                *
  * precondition : a non vide              *
- * resultat : un caractere                *
+ * resultat : un int                      *
  * description : renvoie l'etiquette de a *
  * effet de bord : aucun                  *
  ******************************************/
-Element Etiq(Arbre a);
+int Etiq(Arbre a);
 
 /*********************************************
  * FilsGauche                                *
