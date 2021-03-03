@@ -44,20 +44,25 @@ Arbre ConstruireArbre(fap f) {
         if(est_fap_vide(f))
             return b;
         f = extraire(f,&c,&cc);
-        Arbre a = NouveauNoeud(b,(Element)0,c);
-        if(!est_fap_vide(f))
-            inserer(f,a,bb+cc);
-        else
+        printf("----------------------\n");
+        afficher_arbre(b, 0);
+        printf("--\n");
+        afficher_arbre(c, 0);
+        printf("-----\n");
+        Arbre a = NouveauNoeud(b,(Element)-1,c);
+        if(est_fap_vide(f))
             return a;
+        f = inserer(f,a,bb+cc);
+        afficher_arbre(a, 0);
     }
     return ArbreVide();
 }
 
 int Traiter(Arbre a, code_char c) {
-    if(Etiq(a)!= 0) {
-        HuffmanCode[(int)Etiq(a)].lg = c.lg;
+    if(Etiq(a)!= -1) {
+        HuffmanCode[Etiq(a)].lg = c.lg;
         for(int i = 0 ; i < c.lg; i++ ){
-            HuffmanCode[(int)Etiq(a)].code[i] = c.code[i];
+            HuffmanCode[Etiq(a)].code[i] = c.code[i];
         }
         return 1;
     }
@@ -99,19 +104,18 @@ int main (int argc, char**argv) {
 
 
 
-/*
     fap ftmp = creer_fap_vide();
     while(!est_fap_vide(f)) {
         f = extraire(f,&atmp1,&ftmp1);
         afficher_arbre(atmp1, 0);
-        printf("ftmp1 = %f\n",ftmp1);
+        printf("ftmp1 = %f\n\n\n",ftmp1);
         ftmp = inserer(ftmp,atmp1,ftmp1);
     }
 
     while(!est_fap_vide(ftmp)) {
         ftmp = extraire(ftmp,&atmp1,&ftmp1);
         f = inserer(f,atmp1,ftmp1);
-    }*/
+    }
 
 
 
