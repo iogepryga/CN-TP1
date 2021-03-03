@@ -3,10 +3,7 @@
 
 #include <stdio.h>
 
-typedef struct {
-    char event;
-    float p;
-} Element;
+typedef int Element;
 
 struct cellule {
     Element etiq;
