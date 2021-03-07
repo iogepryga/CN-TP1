@@ -106,6 +106,5 @@ int main (int argc, char**argv) {
     printf("Longueur moyenne : %f\n",moyenne);
     detruire_fap(faptmp);
     detruire_fap(f);
-    //LibererArbre(arbre);
     fclose (file) ;
 }
