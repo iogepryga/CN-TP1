@@ -104,7 +104,7 @@ int main (int argc, char**argv) {
     }
     printf("Entropie : %f\n",entropie);
     printf("Longueur moyenne : %f\n",moyenne);
-    detruire_fap(faptmp);
-    detruire_fap(f);
+    // detruire_fap(faptmp);
+    // detruire_fap(f);
     fclose (file) ;
 }
