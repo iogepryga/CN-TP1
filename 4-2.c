@@ -26,6 +26,7 @@ void ajouter(int* tab, int nb) {
 }
 
 int main (int argc, char**argv) {
+    if(argc != 2) {return -1;}
     symbole_t symbole[256];
     for(int i = 0 ; i < 256 ; i++) {
         symbole[i].p = 0;

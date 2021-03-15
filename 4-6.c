@@ -20,17 +20,35 @@ int Lettre(float p) {
 }
 
 int main (int argc, char**argv) {
+    if(argc != 4) {exit(-1);}
     FILE *table_file = fopen(argv[1], "r");
-    fscanf(table_file,"%d",&table_len);
+    if(table_file == NULL) {
+        printf("impossible d'ouvrir le fichier %s\n",argv[1]);
+        exit(-1);
+    }
+    if(fscanf(table_file,"%d",&table_len) == EOF) {
+        printf("Erreur lecture table_len\n");
+        exit(-1);
+    }
     table = (int*)malloc(sizeof(int)*table_len);
     float Vmessage;
-    sscanf(argv[2],"%f",&Vmessage);
-    int n; sscanf(argv[3],"%d",&n);
+    if(sscanf(argv[2],"%f",&Vmessage)==EOF) {
+        printf("Erreur lecture Vmessage\n");
+        exit(-1);
+    }
+    int n;
+    if(sscanf(argv[3],"%d",&n)==EOF){
+        printf("Erreur lecture n\n");
+        exit(-1);
+    }
     
     for(int i = 0; i < table_len ; i++) {
         int tmp;
         float tmp2, tmp3, tmp4;
-        fscanf(table_file,"%d %f %f %f",&tmp, &tmp2, &tmp3, &tmp4);
+        if(fscanf(table_file,"%d %f %f %f",&tmp, &tmp2, &tmp3, &tmp4)==EOF) {
+            printf("Erreur lecture entrée %d\n",i);
+            exit(-1);
+        }
         table[i] = tmp;
         symbole[tmp].p = tmp2;
         symbole[tmp].Binf = tmp3;
