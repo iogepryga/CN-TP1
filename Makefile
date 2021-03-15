@@ -28,4 +28,4 @@ fap.o : fap.c fap.h
 	$(CC) $(CFLAGS) -c fap.c
 
 clean:
-	rm -rf 1-4 3-6 4-2 5-2 4-6 *.o
+	rm -rf 1-4 3-6 4-2 5-2 4-6 *.o table
