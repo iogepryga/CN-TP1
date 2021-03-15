@@ -71,6 +71,51 @@ Longueur moyenne : 2.580000
 
 
 
+4-3 : 0.171875
+4-4 : 0.171875
+4-5 : 0.084717
+
+4-6 :
+syntaxe :  ./4-6 table Vmessage n
+table -> sortie de 4-2 (ex : ./4-2 KIKIWIWI)
+
+
+
+4-7 : (table de KIKIWIWI)
+$ ./4-6 table 0.084717 20
+75 K 0.250000 0.000000 0.250000
+73 I 0.500000 0.250000 0.750000
+87 W 0.250000 0.750000 1.000000
+0.084717 -> KIKIWIWIIIIIIIIIIWIW
+
+
+4-8 : (table de KIKIWIWI)
+$ ./4-6 table 0.517 20
+75 K 0.250000 0.000000 0.250000
+73 I 0.500000 0.250000 0.750000
+87 W 0.250000 0.750000 1.000000
+0.517000 -> IIIIWKIKWIKKIIIKIIII
+
+4-9 : (table de KIKIWIWI)
+$ ./4-6 table 0.164 20
+75 K 0.250000 0.000000 0.250000
+73 I 0.500000 0.250000 0.750000
+87 W 0.250000 0.750000 1.000000
+0.164000 -> KIWKWWWIIIIIKIII
+
+4-10 : (table de KIKIWIWI)
+$ ./4-6 table 0.312 20
+75 K 0.250000 0.000000 0.250000
+73 I 0.500000 0.250000 0.750000
+87 W 0.250000 0.750000 1.000000
+0.312000 -> IKIIIIIIKWWIIWWII
+
+4-11 : on lit seuleument les n premier caractere
+4-12 : les caraceteres lu en trop n'auront pas de sens
+
+
+
+
 
 
 

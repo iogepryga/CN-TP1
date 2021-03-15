@@ -15,21 +15,14 @@ int string_length(char *s) {
   return result;
 }
 
-int contient(int* tab, int nb, int len) {
-    for(int j = 0; j < len && tab[j] != 0;j++) {
+void ajouter(int* tab, int nb) {
+    int j;
+    for(j = 0; tab[j] != 0;j++) {
         if(tab[j] == (int)nb) {
-            return 1;
+            return ;
         }
     }
-    return 0;
-}
-
-void ajouter(int* tab, int nb) {
-    int i = 0;
-    while(tab[i] != 0){
-        i++;
-    }
-    tab[i] = nb;
+    tab[j] = nb;
 }
 
 int main (int argc, char**argv) {
@@ -49,18 +42,19 @@ int main (int argc, char**argv) {
 
     for(int i = 0; i < len; i++) {
         symbole[(int)argv[1][i]].p += (float)1/(float)len;
-        for(int j = 0; ordre[i] != 0 ; j++) {
-            if(!contient(ordre,(int)argv[1][i],len)) {
-                ajouter(ordre,(int)argv[1][i]);
-            }
-        }
+        ajouter(ordre,(int)argv[1][i]);
     }
-    float Binf= 0, Bsup = 1, Vmessage = 1, Vecart = 0.5;
-    for(int i = 0; ordre[i] != 0; i++) {
+
+    float Binf= 0, Bsup = 1, Vmessage = 1, Vecart = 1;
+    int nbentries = 0;
+    for(int i = 0; ordre[i] != 0; i++ ,nbentries++) {
         symbole[ordre[i]].Binf = Binf;
         Binf += symbole[ordre[i]].p;
         symbole[ordre[i]].Bsup = Binf;
-        i++;
+    }
+    printf("%d\n",nbentries);
+    for(int i = 0; ordre[i] != 0; i++) {
+        printf("%d %f %f %f\n",ordre[i],symbole[ordre[i]].p,symbole[ordre[i]].Binf,symbole[ordre[i]].Bsup);
     }
 
     Binf = 0;
@@ -69,9 +63,15 @@ int main (int argc, char**argv) {
         Binf = Binf + Vecart * symbole[(int)argv[1][i]].Binf;
         Vmessage = (Bsup+Binf) / (float)2;
         Vecart = Bsup - Binf;
+        // Vecart = Bsup - Binf;
+        // Binf = Binf + Vecart * symbole[(int)argv[1][i]].Binf;
+        // Bsup = Bsup - Vecart * symbole[(int)argv[1][i]].Bsup;
+        // Vmessage = (Bsup+Binf) / (float)2;
     }
 
     printf("%s -> %f\n",argv[1],Vmessage);
+
+    free(ordre);
 
 
 }
