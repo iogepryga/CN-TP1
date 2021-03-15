@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 struct cellule {
-    int etiq;
+    unsigned char etiq;
     struct cellule *fd;
     struct cellule *fg;
 };
